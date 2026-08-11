@@ -14,6 +14,8 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
 import { Route as DashboardSuggestionsRouteImport } from './routes/dashboard.suggestions'
 import { Route as DashboardResumeIndexRouteImport } from './routes/dashboard.resume.index'
 import { Route as DashboardResumeAnalysisRouteImport } from './routes/dashboard.resume.analysis'
@@ -43,6 +45,16 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardSuggestionsRoute = DashboardSuggestionsRouteImport.update({
   id: '/suggestions',
   path: '/suggestions',
@@ -64,6 +76,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
@@ -73,6 +87,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
@@ -84,6 +100,8 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
@@ -96,6 +114,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/signup'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard/suggestions'
     | '/dashboard/'
     | '/dashboard/resume/analysis'
@@ -105,6 +125,8 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard/suggestions'
     | '/dashboard'
     | '/dashboard/resume/analysis'
@@ -115,6 +137,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/signup'
+    | '/dashboard/profile'
+    | '/dashboard/settings'
     | '/dashboard/suggestions'
     | '/dashboard/'
     | '/dashboard/resume/analysis'
@@ -165,6 +189,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/suggestions': {
       id: '/dashboard/suggestions'
       path: '/suggestions'
@@ -190,6 +228,8 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteChildren {
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardSuggestionsRoute: typeof DashboardSuggestionsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardResumeAnalysisRoute: typeof DashboardResumeAnalysisRoute
@@ -197,6 +237,8 @@ interface DashboardRouteChildren {
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardSuggestionsRoute: DashboardSuggestionsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardResumeAnalysisRoute: DashboardResumeAnalysisRoute,

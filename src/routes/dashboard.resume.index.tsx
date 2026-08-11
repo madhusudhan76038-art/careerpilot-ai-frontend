@@ -4,7 +4,7 @@ import { ResumeUploader } from "@/components/resume/ResumeUploader";
 import { Button } from "@/components/ui/button";
 import { mockResumeAnalysis } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/dashboard/resume")({
+export const Route = createFileRoute("/dashboard/resume/")({
   head: () => ({
     meta: [
       { title: "Upload your resume — CareerPilot AI" },

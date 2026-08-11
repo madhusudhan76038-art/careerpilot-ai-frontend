@@ -14,7 +14,9 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardSuggestionsRouteImport } from './routes/dashboard.suggestions'
 import { Route as DashboardResumeIndexRouteImport } from './routes/dashboard.resume.index'
+import { Route as DashboardResumeAnalysisRouteImport } from './routes/dashboard.resume.analysis'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +43,19 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardSuggestionsRoute = DashboardSuggestionsRouteImport.update({
+  id: '/suggestions',
+  path: '/suggestions',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardResumeIndexRoute = DashboardResumeIndexRouteImport.update({
   id: '/resume/',
   path: '/resume/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardResumeAnalysisRoute = DashboardResumeAnalysisRouteImport.update({
+  id: '/resume/analysis',
+  path: '/resume/analysis',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -52,14 +64,18 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
   '/dashboard/resume/': typeof DashboardResumeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
   '/dashboard/resume': typeof DashboardResumeIndexRoute
 }
 export interface FileRoutesById {
@@ -68,7 +84,9 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/dashboard/suggestions': typeof DashboardSuggestionsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/resume/analysis': typeof DashboardResumeAnalysisRoute
   '/dashboard/resume/': typeof DashboardResumeIndexRoute
 }
 export interface FileRouteTypes {
@@ -78,17 +96,28 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/signup'
+    | '/dashboard/suggestions'
     | '/dashboard/'
+    | '/dashboard/resume/analysis'
     | '/dashboard/resume/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/dashboard' | '/dashboard/resume'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/dashboard/suggestions'
+    | '/dashboard'
+    | '/dashboard/resume/analysis'
+    | '/dashboard/resume'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/login'
     | '/signup'
+    | '/dashboard/suggestions'
     | '/dashboard/'
+    | '/dashboard/resume/analysis'
     | '/dashboard/resume/'
   fileRoutesById: FileRoutesById
 }
@@ -136,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/suggestions': {
+      id: '/dashboard/suggestions'
+      path: '/suggestions'
+      fullPath: '/dashboard/suggestions'
+      preLoaderRoute: typeof DashboardSuggestionsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/resume/': {
       id: '/dashboard/resume/'
       path: '/resume'
@@ -143,16 +179,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardResumeIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/resume/analysis': {
+      id: '/dashboard/resume/analysis'
+      path: '/resume/analysis'
+      fullPath: '/dashboard/resume/analysis'
+      preLoaderRoute: typeof DashboardResumeAnalysisRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
+  DashboardSuggestionsRoute: typeof DashboardSuggestionsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardResumeAnalysisRoute: typeof DashboardResumeAnalysisRoute
   DashboardResumeIndexRoute: typeof DashboardResumeIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardSuggestionsRoute: DashboardSuggestionsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardResumeAnalysisRoute: DashboardResumeAnalysisRoute,
   DashboardResumeIndexRoute: DashboardResumeIndexRoute,
 }
 

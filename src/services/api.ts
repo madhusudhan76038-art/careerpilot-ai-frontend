@@ -143,23 +143,36 @@ export async function getDashboardStats() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Auth placeholders — wired to Supabase Auth later                    */
+/* Auth — wired to Lovable Cloud auth                                  */
 /* ------------------------------------------------------------------ */
 
-export async function signUp(_input: { fullName: string; email: string; password: string }) {
-  await delay(700);
-  // FUTURE: supabase.auth.signUp({ email, password, options: { data: { full_name } } })
+export async function signUp(input: { fullName: string; email: string; password: string }) {
+  const { supabase } = await import("@/integrations/supabase/client");
+  const { error } = await supabase.auth.signUp({
+    email: input.email,
+    password: input.password,
+    options: {
+      emailRedirectTo: `${window.location.origin}/dashboard`,
+      data: { full_name: input.fullName },
+    },
+  });
+  if (error) throw new ApiError(error.message, error.status ?? 400);
   return { ok: true as const };
 }
 
-export async function logIn(_input: { email: string; password: string }) {
-  await delay(700);
-  // FUTURE: supabase.auth.signInWithPassword({ email, password })
+export async function logIn(input: { email: string; password: string }) {
+  const { supabase } = await import("@/integrations/supabase/client");
+  const { error } = await supabase.auth.signInWithPassword({
+    email: input.email,
+    password: input.password,
+  });
+  if (error) throw new ApiError(error.message, error.status ?? 400);
   return { ok: true as const };
 }
 
 export async function logOut() {
-  await delay(200);
-  // FUTURE: supabase.auth.signOut()
+  const { supabase } = await import("@/integrations/supabase/client");
+  await supabase.auth.signOut();
   return { ok: true as const };
 }
+

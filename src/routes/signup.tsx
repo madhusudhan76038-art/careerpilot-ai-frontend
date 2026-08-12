@@ -40,11 +40,15 @@ function SignupPage() {
     if (Object.keys(next).length) return;
 
     setLoading(true);
-    // FUTURE: Supabase Auth signUp happens inside services/api.ts
-    await signUp({ fullName: values.fullName, email: values.email, password: values.password });
-    setLoading(false);
-    toast.success("Demo account created", { description: "Authentication is connected later." });
-    navigate({ to: "/dashboard" });
+    try {
+      await signUp({ fullName: values.fullName, email: values.email, password: values.password });
+      toast.success("Account created", { description: "Check your inbox if email confirmation is required." });
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not create account");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -74,8 +74,8 @@ function SidebarFooter() {
         className="mt-1 w-full justify-start text-muted-foreground"
         onClick={async () => {
           await logOut();
-          toast("Signed out (demo)", { description: "Authentication is connected later." });
-          navigate({ to: "/login" });
+          toast("Signed out");
+          navigate({ to: "/login", replace: true });
         }}
       >
         <LogOut className="size-4" aria-hidden="true" />

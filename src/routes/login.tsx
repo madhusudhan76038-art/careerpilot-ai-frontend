@@ -35,11 +35,15 @@ function LoginPage() {
     if (Object.keys(next).length) return;
 
     setLoading(true);
-    // FUTURE: Supabase Auth signInWithPassword happens inside services/api.ts
-    await logIn(values);
-    setLoading(false);
-    toast.success("Signed in (demo)");
-    navigate({ to: "/dashboard" });
+    try {
+      await logIn(values);
+      toast.success("Signed in");
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not sign in");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

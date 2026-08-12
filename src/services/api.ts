@@ -42,15 +42,19 @@ export class ApiError extends Error {
   }
 }
 
-/** FUTURE: read the Supabase session token here. */
-function authHeaders(): Record<string, string> {
-  return {};
+/** Attaches the current Lovable Cloud session token to backend calls. */
+async function authHeaders(): Promise<Record<string, string>> {
+  if (typeof window === "undefined") return {};
+  const { supabase } = await import("@/integrations/supabase/client");
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
-    headers: { "Content-Type": "application/json", ...authHeaders(), ...(init.headers ?? {}) },
+    headers: { "Content-Type": "application/json", ...(await authHeaders()), ...(init.headers ?? {}) },
   });
   if (!res.ok) throw new ApiError(`Request failed: ${path}`, res.status);
   return (await res.json()) as T;

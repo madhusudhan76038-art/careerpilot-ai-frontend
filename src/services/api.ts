@@ -90,7 +90,7 @@ export async function uploadResume(file: File, options: UploadResumeOptions = {}
   body.append("file", file);
   const res = await fetch(`${API_BASE_URL}/api/v1/resume/upload`, {
     method: "POST",
-    headers: authHeaders(),
+    headers: await authHeaders(),
     body,
     signal: options.signal ?? null,
   });
